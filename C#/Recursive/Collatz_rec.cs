@@ -10,7 +10,7 @@ public class Collatz{
 		}
 
 		for(long i = iterate; i > 1; i--){
-			long curCollatz = CollatzConjecture(i);
+			long curCollatz = CollatzConjecture(i,0);
 			if(curCollatz > result[9].collatzVal){
 				number num = new number(i, curCollatz);
 				result[9] = num;
@@ -23,13 +23,13 @@ public class Collatz{
 				" and has a collatz conjecture of " + result[i].collatzVal);
 		}
  	}
- 	public static long CollatzConjecture(long val){
-		long counter = 0;
-		while(val > 1){
-			val = ((val % 2) == 1) ? (3*val+1): (val/2);
-			counter++;
+ 	public static long CollatzConjecture(long val, long collatz){
+		if(val <= 1){
+			return collatz;
 		}
-		return counter;
+		else{
+			return ((val % 2 == 1) ? (CollatzConjecture(3*val+1,collatz+1)): (CollatzConjecture(val/2,collatz+1)));
+		}
  	}
  	private static number[] sorter(number[] num){
 		bool sorted = false;
