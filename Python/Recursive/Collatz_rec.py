@@ -1,23 +1,21 @@
 #!/usr/bin/python
 #Author: Jarrett Melnick
 #Program to calculate the top 10 largest Collatz values for a given range.
-def Collatz(num, N):
+def Collatz(num, N, seq):
 	#Function to calculate the length the Collatz sequence for the given number.
-	seq = 0
-	while(num > 1):
-		if(N.has_key(num)):
-			return seq + N[num]
+	if(N.has_key(num)):
+		return seq + N[num]
 
-		n = bin(num)
-		if(n[-1] == '1'):
-			num = 3*num+1
-			num = num/2
-			seq = seq + 2
-		else:
-			num = num/2
-			seq = seq + 1
+	if(num < 2):
+		return seq + 1
 
-	return seq
+	n = bin(num)
+	if(n[-1] == '1'):
+		seq = seq + 1
+		return Collatz(3*num+1, N, seq)
+	else:
+		seq = seq + 1
+		return Collatz(num/2, N, seq)
 
 def GetLargest(N):
 	#Gets the largest number in the dictionary table 
@@ -29,11 +27,11 @@ def GetLargest(N):
 	return maxi
 
 Nums = {}		#Dictionary to store Collatz Values of the index.
-Nums[1] = 1		
+Nums[1] = 0		
 print "Please provide an endpoint"
 iterate = int(input())
 for i in range(1, iterate):
-	Nums[i] = Collatz(i, Nums)
+	Nums[i] = Collatz(i, Nums, 0)
 	
 for i in range(0,10):
 #Prints the numbers with the top 10 largest Collatz values

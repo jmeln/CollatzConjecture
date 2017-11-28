@@ -1,7 +1,9 @@
+//Author: Jarrett Melnick
+//Program to find the top 10 numbers with the largest Collatz value
 public class Collatz_rec{
 	public static void main(String [] args){
 		//long iterate = Long.MAX_VALUE;
-		long iterate = 13;
+		long iterate = 5000000000;		//Max value to be checked. Change this number to change the range
 		number[] result = new number[10]; 
 
 		for(int i = 0; i < 10; i++){
@@ -16,6 +18,7 @@ public class Collatz_rec{
 				result = sorter(result);
 			}
 		}
+		//Prints the top 10 numbers with the longest Collatz seqences
 		result = sorter(result);
 		for(int i = 0; i < 10; i++){
 			System.out.println(i+1 + " is " + result[i].identity + 
@@ -23,6 +26,7 @@ public class Collatz_rec{
 		}
 	}
 	private static long collatzConjecture(long num, long collatz){
+		//Performs the Collatz Conjecture on the given number
 		if(num <= 1){
 			return collatz;
 		}
@@ -31,6 +35,7 @@ public class Collatz_rec{
 		}
 	}
 	private static number[] sorter(number num[]){
+	//Sorts the array by largest Collatz seqence
 		boolean sorted = false;
 		while(!sorted){
 			sorted = true;
@@ -42,7 +47,7 @@ public class Collatz_rec{
 					num[i] = temp;
 					sorted = false;
 				}
-				else if(num[i].collatzVal == num[i-1].collatzVal && num[i].identity > num[i-1].identity){
+				else if(num[i].collatzVal == num[i-1].collatzVal && num[i].identity){
 					number temp = num[i-1];
 					num[i-1] = num[i];
 					num[i] = temp;
@@ -54,8 +59,9 @@ public class Collatz_rec{
 	}
 }
 class number{
-	public long identity = 0;
-	public long collatzVal = 0;
+	//Class to store the Collatz data
+	public long identity = 0;		//Number's identity
+	public long collatzVal = 0;		//Length of Collatz Sequence.
 	public number(){
 		identity = 0;
 		collatzVal = 0;

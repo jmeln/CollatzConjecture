@@ -1,7 +1,9 @@
+//Author: Jarrett Melnick
+//Program to
 public class Collatz{
 	public static void main(String [] args){
 		//long iterate = Long.MAX_VALUE;
-		long iterate = 13;
+		long iterate = 5000000000;			//Max value to iterate
 		number[] result = new number[10]; 
 
 		for(int i = 0; i < 10; i++){
@@ -16,6 +18,7 @@ public class Collatz{
 				result = sorter(result);
 			}
 		}
+		//Prints the top 10 numbers with the largest collatz sequence.
 		result = sorter(result);
 		for(int i = 0; i < 10; i++){
 			System.out.println(i+1 + " is " + result[i].identity + 
@@ -23,6 +26,7 @@ public class Collatz{
 		}
 	}
 	private static long collatzConjecture(long val){
+		//Calculates the length of the Collatz sequence for a given number.
 		long counter = 0;
 		while(val > 1){
 			val = ((val % 2) == 1) ? (3*val+1): (val/2);
@@ -31,6 +35,7 @@ public class Collatz{
 		return counter;
 	}
 	private static number[] sorter(number num[]){
+		//Sorts the array by the length of the collatz sequence
 		boolean sorted = false;
 		while(!sorted){
 			sorted = true;
@@ -42,7 +47,7 @@ public class Collatz{
 					num[i] = temp;
 					sorted = false;
 				}
-				else if(num[i].collatzVal == num[i-1].collatzVal && num[i].identity > num[i-1].identity){
+				else if(num[i].collatzVal == num[i-1].collatzVal){
 					number temp = num[i-1];
 					num[i-1] = num[i];
 					num[i] = temp;
@@ -54,17 +59,20 @@ public class Collatz{
 	}
 }
 class number{
-	public long identity = 0;
-	public long collatzVal = 0;
+	//Class to store the length of the Collatz value.
+	public long identity = 0;		//Number's Identity
+	public long collatzVal = 0;		//Length of Collatz sequence
 	public number(){
 		identity = 0;
 		collatzVal = 0;
 	}
 	public number(long ident, long colVal){
+		//Full constructor
 		identity = ident;
 		collatzVal = colVal;
 	}
 	public long getColatzVal(){
+		//Returns Collatz sequence length
 		return collatzVal;
 	}
 }

@@ -16,7 +16,7 @@ void sorter(number num[10]);
 int main(){
 
 	//Change this number to change the range. It should be the largest nubmer considered.
-	long iterate = 13;
+	long iterate = 5000000000;
 	number result[10];
 
 	//Runs the collatz conjecture on each number in the given range.
@@ -56,7 +56,7 @@ void sorter(number num[]){
 				num[i] = temp;
 				sorted = false;
 			}
-			else if(num[i].collatzVal == num[i-1].collatzVal && num[i].identity > num[i-1].identity){
+			else if(num[i].collatzVal == num[i-1].collatzVal){
 				number temp = num[i-1];
 				num[i-1] = num[i];
 				num[i] = temp;

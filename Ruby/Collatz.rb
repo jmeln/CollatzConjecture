@@ -1,13 +1,16 @@
 #!/usr/bin/env ruby
-
+#Author: Jarrett Melnick
+#Program to print numbers with the smallest Collatz values in a given range.
 def Collatz(num = 1, numArray)
+	#Function to perform the collatz sequence on a given number
+	#numArray has the collatz values of the previous iterations to improve runtime.
 	seq = 0
-	until num < 2
-		if numArray[num] != nil
+
+	until num < 2 		#Essentially while(!true). Will run until the condition is met
+		if numArray[num] != nil		
 			seq = seq + numArray[num]
 			break
 		else
-			#seq = (num.to_s(2)[-1] == '0') ? (seq + 1) : (seq + 2)
 			num = (num.to_s(2)[-1] == '0') ? (num/2) : (3*num+1)
 			seq += 1
 		end
@@ -15,10 +18,11 @@ def Collatz(num = 1, numArray)
 	return seq
 end
 def GetLargest(numArray)
+	#Returns the index of the number with the largest collatz sequence
 	max = 0
 	numArray.each_index{|i|
 		if numArray[i] != nil
-			if numArray[max]  <= numArray[i]
+			if numArray[max] < numArray[i]
 				max = i
 			end
 		end
@@ -26,12 +30,13 @@ def GetLargest(numArray)
 	return max
 end
 
-iterate = 13
+iterate = 13			#The largest number to be considered. Changes range of numbers iterated.
 
 nums = [0, 1, 1]
 for i in 3..iterate do 
 	nums[i] = Collatz(i, nums)
 end
+#Prints top 10 numbers with the largest collatz sequence.
 for i in 1..10 do
 	largest = GetLargest(nums)
 	puts "#{largest} has a collaz sequence of #{nums[largest]}"

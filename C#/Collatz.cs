@@ -1,14 +1,18 @@
+//Author: Jarrett Melnick
+//Program to perform a Collatz sequence on a given range and return the top 10 numbers
+//with the largest collatz sequences.
+
 using System;
 
 public class Collatz{
  	public static void Main(){
- 		long iterate = 13;
+ 		long iterate = 5000000000;			//Max number considered. Change this to change the range.
 		number[] result = new number[10]; 
 
 		for(int i = 0; i < 10; i++){
 			result[i] = new number();
 		}
-
+		//Performs collatz sequence stating from the max number.
 		for(long i = iterate; i > 1; i--){
 			long curCollatz = CollatzConjecture(i);
 			if(curCollatz > result[9].collatzVal){
@@ -17,6 +21,7 @@ public class Collatz{
 				result = sorter(result);
 			}
 		}
+		//Prints the top 10 numbers with the largest collatz values.
 		result = sorter(result);
 		for(int i = 0; i < 10; i++){
 			Console.WriteLine(i+1 + " is " + result[i].identity + 
@@ -24,6 +29,7 @@ public class Collatz{
 		}
  	}
  	public static long CollatzConjecture(long val){
+ 	//Calculates the length of a collatz sequence for a given number
 		long counter = 0;
 		while(val > 1){
 			val = ((val % 2) == 1) ? (3*val+1): (val/2);
@@ -32,6 +38,7 @@ public class Collatz{
 		return counter;
  	}
  	private static number[] sorter(number[] num){
+ 		//Sorts the array of number objects by largest sequence.
 		bool sorted = false;
 		while(!sorted){
 			sorted = true;
@@ -43,7 +50,7 @@ public class Collatz{
 					num[i] = temp;
 					sorted = false;
 				}
-				else if(num[i].collatzVal == num[i-1].collatzVal && num[i].identity > num[i-1].identity){
+				else if(num[i].collatzVal == num[i-1].collatzVal){
 					number temp = num[i-1];
 					num[i-1] = num[i];
 					num[i] = temp;
@@ -56,17 +63,20 @@ public class Collatz{
 
 }
 class number{
-	public long identity = 0;
-	public long collatzVal = 0;
+	//Class to store collatz sequence data.
+	public long identity = 0;		//Number's identity
+	public long collatzVal = 0;		//Length of Collatz sequence
 	public number(){
 		identity = 0;
 		collatzVal = 0;
 	}
 	public number(long ident, long colVal){
+		//Full constructor
 		identity = ident;
 		collatzVal = colVal;
 	}
 	public long getColatzVal(){
+		//Returns collatz sequence value
 		return collatzVal;
 	}
 }
