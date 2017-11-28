@@ -1,5 +1,5 @@
 //Author: Jarrett Melnick
-//Program to
+//Program to find the top 10 Collatz sequences in a given range
 public class Collatz{
 	public static void main(String [] args){
 		//long iterate = Long.MAX_VALUE;
