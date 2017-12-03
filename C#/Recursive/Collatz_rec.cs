@@ -4,16 +4,18 @@ using System;
 
 public class Collatz{
  	public static void Main(){
- 		long iterate = 5000000000;			//Max value in range. Change this to change the range
+		Console.Write("Enter the maximum value to be considered: ");
+		long iterate = Convert.ToInt64(Console.ReadLine());	
+
 		number[] result = new number[10]; 
 
 		for(int i = 0; i < 10; i++){
 			result[i] = new number();
 		}
 
-		for(long i = iterate; i > 1; i--){
-			long curCollatz = CollatzConjecture(i,0);
-			if(curCollatz > result[9].collatzVal){
+		for(long i = 2; i <= iterate; i++){
+			long curCollatz = collatzConjecture(i,0);
+			if((curCollatz > result[9].collatzVal) && !(hasCollatzNumber(result, curCollatz))){
 				number num = new number(i, curCollatz);
 				result[9] = num;
 				result = sorter(result);
@@ -35,6 +37,14 @@ public class Collatz{
 			return ((val % 2 == 1) ? (CollatzConjecture(3*val+1,collatz+1)): (CollatzConjecture(val/2,collatz+1)));
 		}
  	}
+ 	 	private static bool hasCollatzNumber(number num[], long val){
+		//Determines if the given array num has a number with a Collatz sequence of length val.
+ 		for(int i = 0; i < 10; i++){
+ 			if(num[i].collatzVal == val)
+ 			return true;
+ 		}
+ 		return false;
+ 	}
  	private static number[] sorter(number[] num){
  		//Sorts the array by the number with the largest Collatz sequence
 		bool sorted = false;
@@ -43,12 +53,6 @@ public class Collatz{
 
 			for(int i = 1; i < 10 ; i++){
 				if(num[i].collatzVal > num[i-1].collatzVal){
-					number temp = num[i-1];
-					num[i-1] = num[i];
-					num[i] = temp;
-					sorted = false;
-				}
-				else if(num[i].collatzVal == num[i-1].collatzVal){
 					number temp = num[i-1];
 					num[i-1] = num[i];
 					num[i] = temp;
