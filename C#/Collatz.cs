@@ -33,14 +33,14 @@ public class Collatz{
  	public static long CollatzConjecture(long val){
  	//Calculates the length of a collatz sequence for a given number
  		long counter = 0;
- 		string binNumber = Convert.ToString(val, 2);
  		while(val > 1){
+ 			string binNumber = Convert.ToString(val, 2);
  			val = (binNumber.Trim().EndsWith("1")) ? (3*val+1): (val/2);
  			counter++;
  		}
  		return counter;
  	}
- 	private static bool hasCollatzNumber(number num[], long val){
+ 	private static bool hasCollatzNumber(number[] num, long val){
 		//Determines if the given array num has a number with a Collatz sequence of length val.
  		for(int i = 0; i < 10; i++){
  			if(num[i].collatzVal == val)
