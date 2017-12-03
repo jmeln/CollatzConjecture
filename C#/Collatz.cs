@@ -16,7 +16,7 @@ public class Collatz{
  		}
 		//Performs collatz sequence stating from the max number.
 		for(long i = 2; i <= iterate; i++){
-			long curCollatz = collatzConjecture(i);
+			long curCollatz = CollatzConjecture(i);
 			if((curCollatz > result[9].collatzVal) && !(hasCollatzNumber(result, curCollatz))){
 				number num = new number(i, curCollatz);
 				result[9] = num;
@@ -33,8 +33,9 @@ public class Collatz{
  	public static long CollatzConjecture(long val){
  	//Calculates the length of a collatz sequence for a given number
  		long counter = 0;
+ 		string binNumber = Convert.ToString(val, 2);
  		while(val > 1){
- 			val = ((val % 2) == 1) ? (3*val+1): (val/2);
+ 			val = (binNumber.Trim().EndsWith("1")) ? (3*val+1): (val/2);
  			counter++;
  		}
  		return counter;
