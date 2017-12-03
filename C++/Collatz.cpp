@@ -1,36 +1,44 @@
 //Author: Jarrett Melnick
 //Program to find the numbers with the largest Collatz sequence in a range.
 #include <iostream>
+#include <stdio.h>
 
 using namespace std;
 
 //Main struct to keep track of numbers and thier Collatz sequence length.
 struct number{
-	long identity = 0;
-	long collatzVal = 0;
+	number(): identity(0), collatzVal(0){}
+	long identity;
+	long collatzVal;
 };
 
 long collatzConjecture(long num);
+bool hasCollatzNumber(number num[10], long val);
 void sorter(number num[10]);
 
 int main(){
 
 	//Change this number to change the range. It should be the largest nubmer considered.
-	long iterate = 5000000000;
+	cout << "Please enter the largest number to be considered: ";
+	long iterate;
+	cin >> iterate;
+	
 	number result[10];
 
+    cout << "Calculating Results..." << endl;
 	//Runs the collatz conjecture on each number in the given range.
-	for(long i = iterate; i > 1; i--){
+	for(long i = 2; i <= iterate; i++){
 		long curCollatz = collatzConjecture(i);
-		if(curCollatz > result[9].collatzVal){
+		if((curCollatz > result[9].collatzVal) && !(hasCollatzNumber(result, curCollatz))){
 			result[9].identity = i;
 			result[9].collatzVal = curCollatz;
 		}
 		sorter(result);
 	}
 	sorter(result);
+    cout << "Printing Table:" << endl;
 	for(int i = 0; i < 10; i++){
-		printf("%i is %d and has a collatz conjecture of %d.\n", i+1, result[i].identity, result[i].collatzVal);
+		printf("%i is %ld and has a collatz conjecture of %ld.\n", i+1, result[i].identity, result[i].collatzVal);
 	}
 }
 long collatzConjecture(long num){
@@ -42,6 +50,14 @@ long collatzConjecture(long num){
 	}
 	return counter;
 }
+bool hasCollatzNumber(number num[], long val){
+	//Determines if the given array num has a number with a Collatz sequence of length val.
+	for(int i = 0; i < 10; i++){
+		if(num[i].collatzVal == val)
+			return true;
+	}
+	return false;
+}
 void sorter(number num[]){
 	//Function to sort the array of Numbers first by size of collatz sequence and then by 
 	//identity.
@@ -51,12 +67,6 @@ void sorter(number num[]){
 
 		for(int i = 1; i < 10 ; i++){
 			if(num[i].collatzVal > num[i-1].collatzVal){
-				number temp = num[i-1];
-				num[i-1] = num[i];
-				num[i] = temp;
-				sorted = false;
-			}
-			else if(num[i].collatzVal == num[i-1].collatzVal){
 				number temp = num[i-1];
 				num[i-1] = num[i];
 				num[i] = temp;

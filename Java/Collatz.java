@@ -1,9 +1,15 @@
 //Author: Jarrett Melnick
 //Program to find the top 10 Collatz sequences in a given range
+import java.util.Scanner;
+
 public class Collatz{
 	public static void main(String [] args){
 		//Change to modify the behavior of the program.
-		long iterate = 5000000000L;			//Max value to iterate
+		Scanner Scan = new Scanner(System.in);
+
+		System.out.print("Please provide the maximum value to be considered: ");
+		long iterate;			//Max value to iterate
+		iterate = Scan.nextLong();
 
 		number[] result = new number[10]; 
 
