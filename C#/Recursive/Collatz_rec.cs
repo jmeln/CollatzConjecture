@@ -14,7 +14,7 @@ public class Collatz{
 		}
 
 		for(long i = 2; i <= iterate; i++){
-			long curCollatz = collatzConjecture(i,0);
+			long curCollatz = CollatzConjecture(i,0);
 			if((curCollatz > result[9].collatzVal) && !(hasCollatzNumber(result, curCollatz))){
 				number num = new number(i, curCollatz);
 				result[9] = num;
@@ -30,14 +30,15 @@ public class Collatz{
  	}
  	public static long CollatzConjecture(long val, long collatz){
  		//Function to calculate the length of a given number's collatz sequence.
+ 		string binNumber = Convert.ToString(val, 2);
 		if(val <= 1){
 			return collatz;
 		}
 		else{
-			return ((val % 2 == 1) ? (CollatzConjecture(3*val+1,collatz+1)): (CollatzConjecture(val/2,collatz+1)));
+			return (binNumber.Trim().EndsWith("1")) ? (CollatzConjecture(3*val+1,collatz+1)): (CollatzConjecture(val/2,collatz+1));
 		}
  	}
- 	 	private static bool hasCollatzNumber(number num[], long val){
+ 	 	private static bool hasCollatzNumber(number[] num, long val){
 		//Determines if the given array num has a number with a Collatz sequence of length val.
  		for(int i = 0; i < 10; i++){
  			if(num[i].collatzVal == val)
