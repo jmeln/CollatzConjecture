@@ -1,19 +1,20 @@
 #!/usr/bin/perl
 use CollatzNumber;
-use warnings;
+#use warnings;
 use strict;
-use diagnostics;
+#use diagnostics;
 
 
 sub Collatz{
 	#Calculates the length of the Collatz Sequence at $_[0].
-	my $seq = 0;
 	my $num = $_[0];
-	until($num < 2){
-		$num = ($num%2 == 1) ? (3*$num+1) : ($num/2);
-		$seq = $seq+1;
+	my $seq = $_[1];
+	if($num < 2){
+		return $seq;
 	}
-	return $seq;
+	else{
+		return ($num%2 == 1) ? Collatz((3*$num+1), $seq+1) : Collatz(($num/2), $seq+1);
+	}
 }
 sub Sort{
 	#Sorts the given array in $_[0] by their sequence lengths
@@ -68,7 +69,7 @@ foreach my $i(0..9){
 }
 print "\nCalculating Collatz Sequences...\n";
 for(my $i = 2; $i <= $input; $i++){
-	my $curCollatz = Collatz($i);
+	my $curCollatz = Collatz($i,0);
 	my $seq = $nums[9]->GetSequence();
 	if(($curCollatz > $seq) and not(HasCollatzNumber(\@nums, $curCollatz))){
 		my $num = CollatzNumber->new($i, $curCollatz);
