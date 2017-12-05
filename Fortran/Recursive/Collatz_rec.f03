@@ -1,7 +1,7 @@
 program Collatz
 !author: jarrett melnick
 !program to caluclate the top 10 values with the longest collatz sequences in a range
-INTEGER(KIND=16)::curCollatz, iterate, i, iter,z
+INTEGER(KIND=16)::curCollatz, iterate, i, iter,z, counter
 INTEGER(KIND=16), dimension(10):: identities, sequences    !Declares two arrays to hold identities and sequences
 INTEGER(KIND=4)::small, large
 LOGICAL::hasSequenceValue      
@@ -14,7 +14,8 @@ do i = 1, 10
 enddo
 PRINT *, "CALCULATING VALUES..."
 do i = 2, iterate
-  curCollatz = sequence(i)
+  counter = 0
+  curCollatz = sequence(i, counter)
   PRINT*, curCollatz
   small = smallest(sequences)
   hasSequenceValue = hasCollatzSequence(sequences, curCollatz)
@@ -41,26 +42,20 @@ subroutine printTable(numI, numS)
     PRINT *,numI(i) ," has a collatz sequence1 of length ", numS(i)
   enddo
 end subroutine printTable
-recursive integer function sequence(num) result(val)
+recursive integer function sequence(num, counter) result(val)
   !Subroutine that finds the length of the collatz sequence for the given number
-  INTEGER(Kind=16), value:: num
-  INTEGER:: x
+  INTEGER(Kind=16), value:: num, counter
   if(num /= 1)then
+    counter = counter + 1
     if(MOD(num, 2) == 1)then
-      PRINT *
-      x = 1
-      val = sequence((3*num+1)) +1
+      val = sequence((3*num+1), counter)
     else
-      PRINT *
-      x = 2
-      val = sequence((num/2)) +1
+      val = sequence((num/2), counter) 
     endif
   else
-    x = 3
-    PRINT *
+    val = counter
     return
   endif
-  return
 end function sequence
 function hasCollatzSequence(numS, val)
   !Function to see if the given number is in array numS
