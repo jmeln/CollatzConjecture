@@ -54,7 +54,7 @@ for i in range(0, 10):
 print "Please provide an endpoint"
 iterate = long(input())
 print "CALCULATING VALUES..."
-for i in range(2, iterate+1):
+for i in xrange(2, iterate+1):
 	curCollatz = Collatz(i)
 	smallest = GetSmallest(Nums)
 	if((curCollatz > Nums[smallest].sequence) and not(hasCollatzNumber(Nums,curCollatz))):
