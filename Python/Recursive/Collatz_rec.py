@@ -1,41 +1,69 @@
 #!/usr/bin/python
 #Author: Jarrett Melnick
 #Program to calculate the top 10 largest Collatz values for a given range.
-def Collatz(num, N, seq):
-	#Function to calculate the length the Collatz sequence for the given number.
-	if(N.has_key(num)):
-		return seq + N[num]
+class CollatzNumber:
+	def __init__(self, identity,sequence):
+		self.identity = long(identity)
+		self.sequence = long(sequence)
 
+def Collatz(num, seq = -1):
+	#Function to calculate the length the Collatz sequence for the given number.
 	if(num < 2):
 		return seq + 1
 
 	n = bin(num)
 	if(n[-1] == '1'):
 		seq = seq + 1
-		return Collatz(3*num+1, N, seq)
+		return Collatz(3*num+1, seq)
 	else:
 		seq = seq + 1
-		return Collatz(num/2, N, seq)
+		return Collatz(num/2, seq)
 
 def GetLargest(N):
 	#Gets the largest number in the dictionary table 
 	maxi = 1
-	for i in N.keys():
-		if(N[i] >= N[maxi]):
+	for i in range(0,10):
+		if(N[i].sequence >= N[maxi].sequence):
 			maxi = i
-
 	return maxi
 
-Nums = {}		#Dictionary to store Collatz Values of the index.
-Nums[1] = 0		
+def GetSmallest(N):
+	#num = CollatzNumber(0,-1)
+	#N.append(num)
+	mini = 0
+	for i in range(1,10):
+		if(N[i].sequence < N[mini].sequence):
+			mini = i
+	#N.pop(10)
+	#print "%d has the smallest collatz sequence of length %d" % (Nums[mini].identity, Nums[mini].sequence)
+	return mini
+
+def hasCollatzNumber(N, val):
+	for i in range(0,10):
+		if(N[i].sequence == val):
+			return True
+	return False
+
+Nums = []		#List to store Collatz Values of the index.
+for i in range(0, 10):
+	num = CollatzNumber(0, 0)
+	Nums.insert(0,num)
+
 print "Please provide an endpoint"
-iterate = int(input())
-for i in range(1, iterate):
-	Nums[i] = Collatz(i, Nums, 0)
+iterate = long(input())
+print "CALCULATING VALUES..."
+for i in xrange(2, iterate+1):
+	curCollatz = Collatz(i)
+	smallest = GetSmallest(Nums)
+	if((curCollatz > Nums[smallest].sequence) and not(hasCollatzNumber(Nums,curCollatz))):
+		num = CollatzNumber(i, curCollatz)
+		Nums[smallest] = num
+		#print len(Nums)
 	
+print "COMPILING LIST..."
 for i in range(0,10):
 #Prints the numbers with the top 10 largest Collatz values
-	if(len(Nums) > 0):
-		largest = GetLargest(Nums)
-		print "%d has a collatz sequence of length %d" % (largest, Nums[largest])
-		del Nums[largest]
+	largest = GetLargest(Nums)
+  	print "%d has a collatz sequence of length %d" % (Nums[largest].identity, Nums[largest].sequence)
+  	num = CollatzNumber(0,0)
+  	Nums[largest] = num
