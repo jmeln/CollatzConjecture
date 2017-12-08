@@ -57,10 +57,19 @@ for i = 2:iterate
         identities[small] = i
     end
 end
-println("Printing Table...")
+ident2 = copy(identities)
+seq2 = copy(sequences)
+println("SORTED BY SEQUENCE SIZE")
 for i = 1:10
     large = largest(sequences)
     @printf "%d has a Collatz sequence of length %d\n" identities[large] sequences[large]
     identities[large] = 0
     sequences[large] = 0
+end
+println("SORTED BY INTEGER SIZE")
+for i = 1:10
+    large = largest(ident2)
+    @printf "%d has a Collatz sequence of length %d\n" ident2[large] seq2[large]
+    ident2[large] = 0
+    seq2[large] = 0
 end

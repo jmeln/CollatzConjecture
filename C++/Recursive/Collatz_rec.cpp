@@ -14,7 +14,7 @@ struct number{
 
 long collatzConjecture(long num, long collatz);
 bool hasCollatzNumber(number num[10], long val);
-void sorter(number num[10]);
+void sorter(number num[10], bool seqSort);
 
 int main(){
 
@@ -32,12 +32,17 @@ int main(){
 			result[9].identity = i;
 			result[9].collatzVal = curCollatz;
 		}
-		sorter(result);
+		sorter(result, true);
 	}
-	sorter(result);
-	cout << "Printing Table:" << endl;
+	sorter(result, true);
+	cout << "SORTED BY SEQUENCE LENGTH" << endl;
 	for(int i = 0; i < 10; i++){
-		printf("%i is %ld and has a collatz conjecture of %ld.\n", i+1, result[i].identity, result[i].collatzVal);
+		printf("%ld has a collatz conjecture of %ld.\n", result[i].identity, result[i].collatzVal);
+	}
+	sorter(result, false);
+	cout << "SORTED BY INTEGER SIZE" << endl;
+	for(int i = 0; i < 10; i++){
+		printf("%ld has a collatz conjecture of %ld.\n", result[i].identity, result[i].collatzVal);
 	}
 }
 long collatzConjecture(long num, long collatz){
@@ -57,19 +62,30 @@ bool hasCollatzNumber(number num[], long val){
 	}
 	return false;
 }
-void sorter(number num[]){
+void sorter(number num[], bool seqSort){
 	//Function to sort the array of Numbers first by size of collatz sequence and then by 
 	//identity.
 	bool sorted = false;
 	while(!sorted){
 		sorted = true;
-
-		for(int i = 1; i < 10 ; i++){
-			if(num[i].collatzVal > num[i-1].collatzVal){
-				number temp = num[i-1];
-				num[i-1] = num[i];
-				num[i] = temp;
-				sorted = false;
+		if(seqSort){
+			for(int i = 1; i < 10 ; i++){
+				if(num[i].collatzVal > num[i-1].collatzVal){
+					number temp = num[i-1];
+					num[i-1] = num[i];
+					num[i] = temp;
+					sorted = false;
+				}
+			}
+		}
+		else{
+			for(int i = 1; i < 10 ; i++){
+				if(num[i].identity > num[i-1].identity){
+					number temp = num[i-1];
+					num[i-1] = num[i];
+					num[i] = temp;
+					sorted = false;
+				}
 			}
 		}
 	}

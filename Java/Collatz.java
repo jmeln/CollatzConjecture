@@ -25,14 +25,20 @@ public class Collatz{
 				number num = new number(i, curCollatz);
 				result[9] = num;
 				//System.out.println("SORTING...");
-				result = sorter(result);
+				result = sorter(result, true);
 			}
 		}
 		//Prints the top 10 numbers with the largest collatz sequence.
-		result = sorter(result);
-        System.out.println("Building Results...");
+		result = sorter(result, true);
+        System.out.println("SORTED BY SEQUENCE LENGTH:");
 		for(int i = 0; i < 10; i++){
-			System.out.println(i+1 + " is " + result[i].identity + 
+			System.out.println(result[i].identity + 
+				" and has a collatz conjecture of " + result[i].collatzVal);
+		}
+		System.out.println("SORTED BY INTEGER SIZE");
+		result = sorter(result, false);
+		for(int i = 0; i < 10; i++){
+			System.out.println(result[i].identity + 
 				" and has a collatz conjecture of " + result[i].collatzVal);
 		}
 	}
@@ -54,25 +60,30 @@ public class Collatz{
 		}
 		return false;
 	}
-	private static number[] sorter(number num[]){
+	private static number[] sorter(number num[], boolean seqSort){
 		//Sorts the array by the length of the collatz sequence
 		boolean sorted = false;
 		while(!sorted){
 			sorted = true;
-
-			for(int i = 1; i < 10 ; i++){
-				if(num[i].collatzVal > num[i-1].collatzVal){
-					number temp = num[i-1];
-					num[i-1] = num[i];
-					num[i] = temp;
-					sorted = false;
+			if(seqSort){
+				for(int i = 1; i < 10 ; i++){
+					if(num[i].collatzVal > num[i-1].collatzVal){
+						number temp = num[i-1];
+						num[i-1] = num[i];
+						num[i] = temp;
+						sorted = false;
+					}
 				}
-				/*else if(num[i].collatzVal == num[i-1].collatzVal){
-					number temp = num[i-1];
-					num[i-1] = num[i];
-					num[i] = temp;
-					sorted = false;
-				}*/
+			}
+			else{
+				for(int i = 1; i < 10 ; i++){
+					if(num[i].identity > num[i-1].identity){
+						number temp = num[i-1];
+						num[i-1] = num[i];
+						num[i] = temp;
+						sorted = false;
+					}
+				}
 			}
 		}
 		return num;

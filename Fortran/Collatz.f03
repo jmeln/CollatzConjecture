@@ -2,12 +2,13 @@ program Collatz
 !author: jarrett melnick
 !program to caluclate the top 10 values with the longest collatz sequences in a range
 INTEGER(KIND=16)::curCollatz, iterate, i, iter
-INTEGER(KIND=16), dimension(10):: identities, sequences    !Declares two arrays to hold identities and sequences
-INTEGER(KIND=4)::small, large
+INTEGER(KIND=16), dimension(10):: identities, sequences, ident2, seq2    !Declares two arrays to hold identities and sequences
+INTEGER(KIND=4)::small, large, large2
 LOGICAL::hasSequenceValue      
 
 !Change iterate to change the range of numbers considered.
 iterate = 15
+!Set the arrays to 0
 do i = 1, 10
   identities(i) = 0
   sequences(i) = 0
@@ -25,19 +26,28 @@ do i = 2, iterate
   endif
 enddo
 PRINT *, "Compililng List..."
+ident2 = identities
+seq2 = sequences
+PRINT *, "SORTED BY SEQUENCE LENGTH"
 do i = 1, 10
   large = largest(sequences)
-  PRINT *, identities(large), " has a collatz sequence of length ", sequences(large)
+  PRINT *, identities(large), " has a sequence length of ", sequences(large)
   identities(large) = 0
   sequences(large) = 0
 enddo
-
+PRINT *, "SORTED BY INTEGER SIZE"
+do i = 1, 10
+  large = largest(ident2)
+  PRINT *, ident2(large), " has a sequence length of ", seq2(large)
+  ident2(large) = 0
+  seq2(large) = 0
+enddo
 contains
 subroutine printTable(numI, numS)
   !subroutine that prints an unsorted table
   integer(KIND=16), dimension(10)::numI, numS
   do i = 1, 10
-    PRINT *,numI(i) ," has a collatz sequence1 of length ", numS(i)
+    PRINT *,numI(i) ," ", numS(i)
   enddo
 end subroutine printTable
 function sequence(num)

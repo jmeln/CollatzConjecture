@@ -2,7 +2,7 @@ program Collatz
 !author: jarrett melnick
 !program to caluclate the top 10 values with the longest collatz sequences in a range
 INTEGER(KIND=16)::curCollatz, iterate, i, iter,z, counter
-INTEGER(KIND=16), dimension(10):: identities, sequences    !Declares two arrays to hold identities and sequences
+INTEGER(KIND=16), dimension(10):: identities, sequences, ident2, seq2    !Declares two arrays to hold identities and sequences
 INTEGER(KIND=4)::small, large
 LOGICAL::hasSequenceValue      
 
@@ -16,7 +16,6 @@ PRINT *, "CALCULATING VALUES..."
 do i = 2, iterate
   counter = 0
   curCollatz = sequence(i, counter)
-  PRINT*, curCollatz
   small = smallest(sequences)
   hasSequenceValue = hasCollatzSequence(sequences, curCollatz)
   if((curCollatz > sequences(small)))then
@@ -27,13 +26,22 @@ do i = 2, iterate
   endif
 enddo
 PRINT *, "Compililng List..."
+ident2 = identities
+seq2 = sequences
+PRINT *, "SORTED BY SEQUENCE LENGTH"
 do i = 1, 10
   large = largest(sequences)
-  PRINT *, identities(large), " has a collatz sequence of length ", sequences(large)
+  PRINT *, identities(large), " has a sequence length of ", sequences(large)
   identities(large) = 0
   sequences(large) = 0
 enddo
-
+PRINT *, "SORTED BY INTEGER SIZE"
+do i = 1, 10
+  large = largest(ident2)
+  PRINT *, ident2(large), " has a sequence length of ", seq2(large)
+  ident2(large) = 0
+  seq2(large) = 0
+enddo
 contains
 subroutine printTable(numI, numS)
   !subroutine that prints an unsorted table

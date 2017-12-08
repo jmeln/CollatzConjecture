@@ -20,13 +20,20 @@ public class Collatz{
 			if((curCollatz > result[9].collatzVal) && !(hasCollatzNumber(result, curCollatz))){
 				number num = new number(i, curCollatz);
 				result[9] = num;
-				result = sorter(result);
+				result = sorter(result, true);
 			}
 		}
 		//Prints the top 10 numbers with the largest collatz values.
- 		result = sorter(result);
+		Console.WriteLine("SORTED BY SEQUENCE LENGTH");
+ 		result = sorter(result, true);
  		for(int i = 0; i < 10; i++){
- 			Console.WriteLine(i+1 + " is " + result[i].identity + 
+ 			Console.WriteLine(result[i].identity + 
+ 				" and has a collatz conjecture of " + result[i].collatzVal);
+ 		}
+ 		result = sorter(result, false);
+ 		Console.WriteLine("SORTED BY INTEGER SIZE:");
+ 		for(int i = 0; i < 10; i++){
+ 			Console.WriteLine(result[i].identity + 
  				" and has a collatz conjecture of " + result[i].collatzVal);
  		}
  	}
@@ -48,18 +55,29 @@ public class Collatz{
  		}
  		return false;
  	}
- 	private static number[] sorter(number[] num){
- 		//Sorts the array of number objects by largest sequence.
+ 	private static number[] sorter(number[] num, bool seqSort){
+ 		//Sorts the array of number objects by largest sequence or identity.
  		bool sorted = false;
  		while(!sorted){
  			sorted = true;
-
- 			for(int i = 1; i < 10 ; i++){
- 				if(num[i].collatzVal > num[i-1].collatzVal){
- 					number temp = num[i-1];
- 					num[i-1] = num[i];
- 					num[i] = temp;
- 					sorted = false;
+ 			if(seqSort){
+ 				for(int i = 1; i < 10 ; i++){
+ 					if(num[i].collatzVal > num[i-1].collatzVal){
+ 						number temp = num[i-1];
+ 						num[i-1] = num[i];
+ 						num[i] = temp;
+ 						sorted = false;
+ 					}
+ 				}
+ 			}
+ 			else{
+ 				for(int i = 1; i < 10 ; i++){
+ 					if(num[i].identity > num[i-1].identity){
+ 						number temp = num[i-1];
+ 						num[i-1] = num[i];
+ 						num[i] = temp;
+ 						sorted = false;
+ 					}
  				}
  			}
  		}

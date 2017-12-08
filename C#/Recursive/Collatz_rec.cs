@@ -18,13 +18,20 @@ public class Collatz{
 			if((curCollatz > result[9].collatzVal) && !(hasCollatzNumber(result, curCollatz))){
 				number num = new number(i, curCollatz);
 				result[9] = num;
-				result = sorter(result);
+				result = sorter(result, true);
 			}
 		}
 		//Prints the top 10 numbers with the largest Collatz sequences.
-		result = sorter(result);
+		result = sorter(result, true);
+		Console.WriteLine("SORTING BY SEQUENCE LENGTH:");
 		for(int i = 0; i < 10; i++){
-			Console.WriteLine(i+1 + " is " + result[i].identity + 
+			Console.WriteLine(result[i].identity + 
+				" and has a collatz conjecture of " + result[i].collatzVal);
+		}
+		Console.WriteLine("SORTING BY INTEGER LENGTH");
+		result = sorter(result, false);
+		for(int i = 0; i < 10; i++){
+			Console.WriteLine(result[i].identity + 
 				" and has a collatz conjecture of " + result[i].collatzVal);
 		}
  	}
@@ -46,23 +53,34 @@ public class Collatz{
  		}
  		return false;
  	}
- 	private static number[] sorter(number[] num){
- 		//Sorts the array by the number with the largest Collatz sequence
-		bool sorted = false;
-		while(!sorted){
-			sorted = true;
-
-			for(int i = 1; i < 10 ; i++){
-				if(num[i].collatzVal > num[i-1].collatzVal){
-					number temp = num[i-1];
-					num[i-1] = num[i];
-					num[i] = temp;
-					sorted = false;
-				}
-			}
-		}
-		return num;
-	}
+ 	private static number[] sorter(number[] num, bool seqSort){
+ 		//Sorts the array by the number with the largest Collatz sequence or integer size
+ 		bool sorted = false;
+ 		while(!sorted){
+ 			sorted = true;
+ 			if(seqSort){
+ 				for(int i = 1; i < 10 ; i++){
+ 					if(num[i].collatzVal > num[i-1].collatzVal){
+ 						number temp = num[i-1];
+ 						num[i-1] = num[i];
+ 						num[i] = temp;
+ 						sorted = false;
+ 					}
+ 				}
+ 			}
+ 			else{
+ 				for(int i = 1; i < 10 ; i++){
+ 					if(num[i].identity > num[i-1].identity){
+ 						number temp = num[i-1];
+ 						num[i-1] = num[i];
+ 						num[i] = temp;
+ 						sorted = false;
+ 					}
+ 				}
+ 			}
+ 		}
+ 		return num;
+ 	}
 
 }
 class number{
