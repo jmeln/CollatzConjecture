@@ -7,6 +7,8 @@
 (defvar seq 0)
 (defvar identArray)
 (defvar seqArray)
+(defvar ident2)
+(defvar seq2)
 (defvar sm 0)
 (defvar mx 0)
 (defvar small 0)
@@ -63,7 +65,7 @@
  )
 ;Creates the list of the collatz sequences
 (dotimes (j iterate)
-  (setq curCollatz (collatz j))
+  (setq curCollatz (collatz j 0))
   (setq small (smallest seqArray))
   (setq hasSequence (hasSequenceValue seqArray curCollatz))
   (when (and (< (aref seqArray small) curCollatz)(= hasSequence 0))
