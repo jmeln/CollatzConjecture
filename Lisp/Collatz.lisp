@@ -53,17 +53,19 @@
 	(return-from hasSequenceValue hs)
 )
 ;------------------------------------------------------------------------------------
-(setf identArray(make-array'(10)))
+;Making the arrays
+(setf identArray(make-array'(10))) 
 (setf seqArray(make-array'(10)))
 (setf ident2(make-array'(10)))
 (setf seq2(make-array'(10)))
-
+;setting the arrays to 0
 (dotimes(i 10)
   (setf(aref identArray i) 0)
   (setf(aref seqArray i) 0)
   (setf(aref ident2 i) 0)
   (setf(aref seq2 i) 0)
  )
+;Creates the list of the collatz sequences
 (dotimes (j iterate)
   (setq curCollatz (collatz j))
   (setq small (smallest seqArray))
@@ -88,10 +90,3 @@
   (setf(aref ident2 large) 0)
   (setf(aref seq2 large) 0)
 )
-;(setf(aref seqArray 5) 10)
-;(setf(aref seqArray 6) 0)
-;(setq large (largest seqArray))
-;(format t "Largest index: ~d ~d~%" large (aref seqArray large))
-;(printArr seqArray)
-;(print(hasSequenceValue seqArray 11))
-;(print(hasSequenceValue seqArray 1))

@@ -17,14 +17,6 @@
 ;;-------------------------------------------------------------------------------
 ;;Functions:
 
-;(defun collatz (num) ;Calculates the length of the Collatz sequence for a number
-;  (setq seq 0)
-;(loop
-;  (when (< num 2) (return seq))
-;  (if (= (mod num 2) 1) (setq num ( + (* 3 num) 1))(setq num (/ num 2)))
-;  (setq seq (+ seq 1))
-; )
-;)
 (defun collatz (num seq)
 	 (loop
 	   (when(< num 2) (return-from collatz seq))
@@ -57,31 +49,40 @@
 	(return-from hasSequenceValue hs)
 )
 ;------------------------------------------------------------------------------------
-(setf identArray(make-array'(10)))
+;Making the arrays
+(setf identArray(make-array'(10))) 
 (setf seqArray(make-array'(10)))
-
+(setf ident2(make-array'(10)))
+(setf seq2(make-array'(10)))
+;setting the arrays to 0
 (dotimes(i 10)
   (setf(aref identArray i) 0)
   (setf(aref seqArray i) 0)
+  (setf(aref ident2 i) 0)
+  (setf(aref seq2 i) 0)
  )
+;Creates the list of the collatz sequences
 (dotimes (j iterate)
-  (setq curCollatz (collatz j 0))
+  (setq curCollatz (collatz j))
   (setq small (smallest seqArray))
   (setq hasSequence (hasSequenceValue seqArray curCollatz))
   (when (and (< (aref seqArray small) curCollatz)(= hasSequence 0))
   	(setf (aref identArray small) j)
-  	(setf (aref seqArray small) curCollatz))
+  	(setf (aref ident2 small) j)
+  	(setf (aref seqArray small) curCollatz)
+  	(setf (aref seq2 small) curCollatz))
 )
+(format t "SORTING BY SEQUENCE LENGTH ~%")
 (dotimes (i 10)
   (setq large (largest seqArray))
   (format t "~d has a Collatz Sequence of length ~d.~%" (aref identArray large) (aref seqArray large))
   (setf(aref identArray large) 0)
   (setf(aref seqArray large) 0)
 )
-;(setf(aref seqArray 5) 10)
-;(setf(aref seqArray 6) 0)
-;(setq large (largest seqArray))
-;(format t "Largest index: ~d ~d~%" large (aref seqArray large))
-;(printArr seqArray)
-;(print(hasSequenceValue seqArray 11))
-;(print(hasSequenceValue seqArray 1))
+(format t "SORTING BY INTEGER LENGTH ~%")
+(dotimes (i 10)
+  (setq large (largest ident2))
+  (format t "~d has a Collatz Sequence of length ~d.~%" (aref ident2 large) (aref seq2 large))
+  (setf(aref ident2 large) 0)
+  (setf(aref seq2 large) 0)
+)
