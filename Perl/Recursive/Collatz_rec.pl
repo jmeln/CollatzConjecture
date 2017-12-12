@@ -19,7 +19,9 @@ sub Collatz{
 sub Sort{
 	#Sorts the given array in $_[0] by their sequence lengths
 	my @numArray = @{$_[0]};
+	my $seqSort = $_[1];
 	my $sorted = 0;
+	if($seqSort == 1){
 	do{
 		$sorted = 0;
 		for(my $i = 1; $i < 10; $i++){
@@ -33,6 +35,23 @@ sub Sort{
 			}
 		}
 	}while($sorted == 1);
+	}
+	else{
+
+	do{
+		$sorted = 0;
+		for(my $i = 1; $i < 10; $i++){
+			my $seq1 = $numArray[$i-1]->GetIdentity();
+			my $seq2 = $numArray[$i]->GetIdentity();
+			if($seq1 < $seq2){
+				my $temp = $numArray[$i-1];
+				$numArray[$i-1] = $numArray[$i];
+				$numArray[$i] = $temp;
+				$sorted = 1;
+			}
+		}
+	}while($sorted == 1);
+	}
 	return @numArray;
 }
 sub HasCollatzNumber{
@@ -50,7 +69,6 @@ sub HasCollatzNumber{
 sub PrintArray{
 	#Prints the contents of the given array at $_[0].
 	my @numArray = @{$_[0]};
-	@numArray = Sort(\@numArray);
 	foreach $a (@numArray){
 		my $aIdentity = $a->GetIdentity();
 		my $aSequence = $a->GetSequence();
@@ -67,16 +85,19 @@ foreach my $i(0..9){
 	my $num = new CollatzNumber(0, 0);
 	push(@nums, $num)
 }
-print "\nCalculating Collatz Sequences...\n";
+print "\nSORTING BY SEQUENCE SIZE:\n";
 for(my $i = 2; $i <= $input; $i++){
 	my $curCollatz = Collatz($i,0);
 	my $seq = $nums[9]->GetSequence();
 	if(($curCollatz > $seq) and not(HasCollatzNumber(\@nums, $curCollatz))){
 		my $num = CollatzNumber->new($i, $curCollatz);
 		$nums[9] = $num;
-		@nums = Sort(\@nums);
+		@nums = Sort(\@nums, 1);
 	}
 }
+@nums = Sort(\@nums, 1);
 PrintArray(\@nums);
-
+@nums = Sort(\@nums, 0);
+print "SORTING BY INTEGER SIZE:\n";
+PrintArray(\@nums);
 exit 0;
