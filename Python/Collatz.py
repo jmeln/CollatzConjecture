@@ -21,13 +21,19 @@ def Collatz(num):
 
 	return seq
 
-def GetLargest(N):
+def GetLargest(N,seq):
 	#Gets the largest number in the dictionary table 
 	maxi = 1
-	for i in range(0,10):
-		if(N[i].sequence >= N[maxi].sequence):
-			maxi = i
-	return maxi
+	if(seq == 1):
+		for i in range(0,10):
+			if(N[i].sequence >= N[maxi].sequence):
+				maxi = i
+		return maxi
+	else:
+		for i in range(0,10):
+			if(N[i].identity >= N[maxi].identity):
+				maxi = i
+		return maxi
 
 def GetSmallest(N):
 	#num = CollatzNumber(0,-1)
@@ -62,10 +68,18 @@ for i in xrange(2, iterate+1):
 		Nums[smallest] = num
 		#print len(Nums)
 	
-print "COMPILING LIST..."
+print "SORTED BY SEQUENCE LENGTH:"
+Nums2 = list(Nums)
 for i in range(0,10):
 #Prints the numbers with the top 10 largest Collatz values
-	largest = GetLargest(Nums)
+	largest = GetLargest(Nums,1)
   	print "%d has a collatz sequence of length %d" % (Nums[largest].identity, Nums[largest].sequence)
   	num = CollatzNumber(0,0)
   	Nums[largest] = num
+
+print "\nSORTED BY INTEGER LENGTH:"
+for i in range(0,10):
+	largest = GetLargest(Nums2,0)
+	print "%d has a collatz sequene of length %d" % (Nums2[largest].identity, Nums2[largest].sequence)
+	num = CollatzNumber(0,0)
+	Nums2[largest] = num
