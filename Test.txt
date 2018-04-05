@@ -1,2 +1,0 @@
-This is a file to ensure git is set up and able to push on my github
-
